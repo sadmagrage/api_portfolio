@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const multer = require("multer");
 
 const projectController = require("../controllers/projectController");
+const { auth: basicAuth } = require("../middlewares/basicAuth");
 
 const upload = multer();
 
@@ -14,10 +15,10 @@ router.get("", projectController.findAll);
 
 router.get("/:_id", projectController.findOne);
 
-router.post("", upload.single('image'), projectController.save);
+router.post("", basicAuth, upload.single('image'), projectController.save);
 
-router.put(projectController.update);
+router.put("/:_id", basicAuth, upload.single('image'), projectController.update);
 
-router.delete(projectController.del);
+router.delete("/:_id", basicAuth, projectController.del);
 
 module.exports = { router };

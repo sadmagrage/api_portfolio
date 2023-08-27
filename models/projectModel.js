@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const { Binary } = require("bson");
 const uuid = require("uuid");
+const { bufferToUuid } = require("../utils/parse");
 
 const projectSchema = new mongoose.Schema({
     _id: {
@@ -19,7 +19,7 @@ const projectSchema = new mongoose.Schema({
         of: String,
         required: true
     },
-    image: {
+    bufferImage: {
         type: Buffer,
         required: true
     },
@@ -41,16 +41,17 @@ const projectSchema = new mongoose.Schema({
     }
 });
 
+projectSchema.set('toJSON', {
+    getters: true,
+    transform: (doc, ret) => {
+        const uuid =  bufferToUuid(ret._id);
+
+        ret._id = uuid;
+
+        return ret;
+    },
+});
+
 const Project = mongoose.model("Project", projectSchema);
 
 module.exports = Project;
-
-/* {
-    name: "juninho cabeçote",
-    tecnologies: ["node.js", "mongodb"],
-    image: "https://d2r9epyceweg5n.cloudfront.net/stores/002/815/230/products/design-sem-nome-191-8aeb712c872fa63c2d16773541755222-640-0.png",
-    status: false,
-    description: "dmsakdopsadksaokds",
-    repository: "d",
-    runningLink: ""
-} */
