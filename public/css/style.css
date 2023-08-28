@@ -1,0 +1,30 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: black;
+    color: white;
+    height: 100vh;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    display: flex;
+    height: 100%;
+    flex-wrap: wrap;    
+    justify-content: space-around;
+    align-items: center;
+}
+
+.repositorio, .endpoint {
+    margin: 0 15px;
+    border: 2px solid white;
+    border-radius: 15px;
+    padding: 15px;
+}
